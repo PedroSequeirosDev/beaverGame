@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 4255553264318195837}
   - component: {fileID: 2431638472013406964}
   - component: {fileID: 9090750323615091332}
-  - component: {fileID: 791683775285208398}
+  - component: {fileID: 4028121956801119998}
+  - component: {fileID: -4992241766720245286}
   m_Layer: 0
   m_Name: Castor
   m_TagString: Beaver
@@ -78,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -9091472931739967194, guid: 3d74a7fc459756f4b8ed572064730bb4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -154,7 +155,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &791683775285208398
+--- !u!114 &4028121956801119998
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,7 +164,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 5739072683652287266}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 789095efdf19058499d1479f8f285dd3, type: 3}
+  m_Script: {fileID: 11500000, guid: 4658258025fe2f94585b3e01f86be051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  moveSpeed: 100
+--- !u!114 &-4992241766720245286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5739072683652287266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572c8ea52d98f084c814ef61aeda8af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profession: 0
+  targetObject: {fileID: 0}
+  stopDistance: 10

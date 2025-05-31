@@ -7,11 +7,12 @@ TagManager:
   - Beaver
   - Tree
   - House
+  - Dam
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Houses
   - Water
   - UI
   - 

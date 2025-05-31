@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 5939442979613276576}
   - component: {fileID: 5193335440846134411}
   - component: {fileID: 6228841035778301069}
-  m_Layer: 0
+  - component: {fileID: 253749997461479422}
+  m_Layer: 3
   m_Name: BeaverHouse
   m_TagString: House
   m_Icon: {fileID: 0}
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 3654477649298145646, guid: 5f9ae39b7ac518c40a79a968a5409a6f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -134,3 +135,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 73.741776, y: 42.424255}
   m_EdgeRadius: 0
+--- !u!114 &253749997461479422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470402165833173835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36331c943f84a244c86d6d986bb16065, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildPoints: 30
+  maxBuildPoints: 30
