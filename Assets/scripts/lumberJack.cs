@@ -7,9 +7,11 @@ public class lumberJack : MonoBehaviour
     private Transform closestTree;
     private float closestDistance = Mathf.Infinity;
 
+    private Rigidbody2D rb;
+
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+      Rigidbody2D rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -18,9 +20,18 @@ public class lumberJack : MonoBehaviour
 
         if (closestTree != null)
         {
-            Vector3 direction = (closestTree.position - transform.position).normalized;
-            transform.position += direction * speed * Time.deltaTime;
-            transform.LookAt(closestTree);
+            Vector2 direction = (closestTree.position - transform.position).normalized;
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 1f, LayerMask.GetMask("Houses"));
+            if (hit.collider != null)
+            {
+
+                Vector2 avoidDir = Vector2.Perpendicular(direction).normalized;
+                direction += avoidDir * 0.5f;
+                direction.Normalize();
+            }
+
+            rb.MovePosition(rb.position + direction * speed * Time.deltaTime);
         }
     }
 
@@ -38,5 +49,8 @@ public class lumberJack : MonoBehaviour
         }
     }
 
-    private void 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        rb.linearVelocity = Vector2.zero;
+    }
 }
