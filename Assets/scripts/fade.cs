@@ -27,5 +27,6 @@ public class fade : MonoBehaviour
         }
         color.a = 1;
         fader.color = color;
+        
     }
 }
