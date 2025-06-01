@@ -20,7 +20,7 @@ public class fade : MonoBehaviour
 
         while (timer < fadeDuration)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             color.a = Mathf.Lerp(0, 1, timer / fadeDuration);
             fader.color = color;
             yield return null;
