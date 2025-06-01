@@ -276,6 +276,9 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 495
+  normalSprite: {fileID: -9091472931739967194, guid: 3d74a7fc459756f4b8ed572064730bb4, type: 3}
+  specialSprite: {fileID: -3719932297313336634, guid: 99840c0fa6a3cd345a41d092885b331f, type: 3}
+  specialLayerName: Water
 --- !u!114 &-4992241766720245286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 572c8ea52d98f084c814ef61aeda8af3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profession: 0
+  _profession: 0
   targetObject: {fileID: 0}
   stopDistance: 10

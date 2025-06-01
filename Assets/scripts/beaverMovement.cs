@@ -7,9 +7,19 @@ public class beaverMovement : MonoBehaviour
     private Camera mainCamera;
     public LayerMask obstacleMask = ~0;
 
+    [Header("Sprite Change")]
+    public Sprite normalSprite;
+    public Sprite specialSprite;
+    public string specialLayerName = "SpecialZone"; // Set this to your ignored layer name
+
+    private SpriteRenderer spriteRenderer;
+    private int specialLayer;
+
     void Start()
     {
         mainCamera = Camera.main;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        specialLayer = LayerMask.NameToLayer(specialLayerName);
     }
 
     void Update()
@@ -42,6 +52,23 @@ public class beaverMovement : MonoBehaviour
                 float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(10, 10, angle + 90); // +90 if your sprite faces down, +270 if it faces up
             }
+        }
+
+        // Sprite change logic: check for overlap with special layer
+        Collider2D myCollider = GetComponent<Collider2D>();
+        bool inSpecial = false;
+        if (myCollider != null)
+        {
+            if (myCollider != null)
+            {
+                Collider2D[] results = new Collider2D[10];
+                int count = Physics2D.OverlapCollider(myCollider, new ContactFilter2D { layerMask = 1 << specialLayer, useLayerMask = true }, results);
+                inSpecial = count > 0 && results[0] != null;
+            }
+        }
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sprite = inSpecial ? specialSprite : normalSprite;
         }
 
         // Clamp position to camera view
