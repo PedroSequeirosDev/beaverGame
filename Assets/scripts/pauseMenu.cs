@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,6 +6,7 @@ public class pauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseManager;
     bool isPaused = false;
+    public fade screenfade;
 
     private void Update()
     {
@@ -17,9 +19,9 @@ public class pauseMenu : MonoBehaviour
 
 
         }
-        
-        
-        
+
+
+
     }
 
     public void ResumeGame()
@@ -43,6 +45,13 @@ public class pauseMenu : MonoBehaviour
     {
         Debug.Log("Returning to menu");
         Time.timeScale = 1;
+        StartCoroutine(FadeAndLoad());
+        
+    }
+
+    private IEnumerator FadeAndLoad()
+    {
+        yield return screenfade.FadeIn();
         SceneManager.LoadScene("mainMenu");
     }
 }
