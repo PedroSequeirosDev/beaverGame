@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 136de0b03f7f16b4393e37d0c509fb28
+guid: fc038ad45ec48934083abb1f2e3b6114
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -525506827387362294
-    second: idleBubble_0
+      213: 1227684204898922006
+    second: Life_Bar_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: idleBubble_0
+      name: Life_Bar_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 4
-        width: 71
-        height: 72
+        x: 0
+        y: 33
+        width: 64
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a04a882235605b8f0800000000000000
-      internalID: -525506827387362294
+      spriteID: 61eab51a74c990110800000000000000
+      internalID: 1227684204898922006
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      idleBubble_0: -525506827387362294
+      Life_Bar_0: 1227684204898922006
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

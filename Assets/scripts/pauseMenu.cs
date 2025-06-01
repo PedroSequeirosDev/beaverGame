@@ -45,13 +45,11 @@ public class pauseMenu : MonoBehaviour
     {
         Debug.Log("Returning to menu");
         Time.timeScale = 1;
-        StartCoroutine(FadeAndLoad());
-        
+        SceneManager.LoadScene("mainMenu");
+    
     }
 
-    private IEnumerator FadeAndLoad()
-    {
-        yield return screenfade.FadeIn();
-        SceneManager.LoadScene("mainMenu");
-    }
+    
+        
+    
 }
