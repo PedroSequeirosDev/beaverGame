@@ -9,6 +9,8 @@ public class beaverHouse : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     public bool IsBuilt => buildPoints <= 0;
 
+    [SerializeField] private ParticleSystem buildFinishEffect;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -29,6 +31,14 @@ public class beaverHouse : MonoBehaviour
     {
         buildPoints -= amount;
         if (buildPoints < 0) buildPoints = 0;
+
+        if (buildPoints == 0)
+        {
+            var emissor = buildFinishEffect.emission;
+            emissor.enabled = true;
+            buildFinishEffect.Play();
+        }
+
         UpdateOpacity();
     }
 
