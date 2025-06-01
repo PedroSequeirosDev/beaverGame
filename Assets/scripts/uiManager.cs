@@ -66,7 +66,7 @@ public class uiManager : MonoBehaviour
         {
             var toIdle = damWorkers[Random.Range(0, damWorkers.Count)];
             toIdle.profession = BeaverProfession.Idle;
-            toIdle.targetObject = null;
+            toIdle.AssignTargetForProfession();
         }
     }
 
@@ -78,7 +78,7 @@ public class uiManager : MonoBehaviour
         {
             var toDam = idles[Random.Range(0, idles.Count)];
             toDam.profession = BeaverProfession.DamWorker;
-            toDam.targetObject = null; // Will auto-assign in Start/Update
+            toDam.AssignTargetForProfession();
         }
     }
 
@@ -90,7 +90,7 @@ public class uiManager : MonoBehaviour
         {
             var toIdle = lumberjacks[Random.Range(0, lumberjacks.Count)];
             toIdle.profession = BeaverProfession.Idle;
-            toIdle.targetObject = null;
+            toIdle.AssignTargetForProfession();
         }
     }
 
@@ -102,7 +102,7 @@ public class uiManager : MonoBehaviour
         {
             var toLumber = idles[Random.Range(0, idles.Count)];
             toLumber.profession = BeaverProfession.Lumberjack;
-            toLumber.targetObject = null;
+            toLumber.AssignTargetForProfession();
         }
     }
 
@@ -114,7 +114,7 @@ public class uiManager : MonoBehaviour
         {
             var toIdle = builders[Random.Range(0, builders.Count)];
             toIdle.profession = BeaverProfession.Idle;
-            toIdle.targetObject = null;
+            toIdle.AssignTargetForProfession();
         }
     }
 
@@ -126,7 +126,7 @@ public class uiManager : MonoBehaviour
         {
             var toBuilder = idles[Random.Range(0, idles.Count)];
             toBuilder.profession = BeaverProfession.Builder;
-            toBuilder.targetObject = null;
+            toBuilder.AssignTargetForProfession();
         }
     }
 }
