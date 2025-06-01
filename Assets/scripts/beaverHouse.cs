@@ -35,7 +35,7 @@ public class beaverHouse : MonoBehaviour
     {
         if (spriteRenderer == null) return;
 
-        float alpha = Mathf.Lerp(0.2f, 1f, 1f - Mathf.Clamp01((float)buildPoints / maxBuildPoints));
+        float alpha = Mathf.Lerp(0.5f, 1f, 1f - Mathf.Clamp01((float)buildPoints / maxBuildPoints));
         Color color = spriteRenderer.color;
         color.a = alpha;
         spriteRenderer.color = color;

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7890904286957654060}
   - component: {fileID: 1639377245130033650}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: jobIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 9090750323615091332}
   - component: {fileID: 4028121956801119998}
   - component: {fileID: -4992241766720245286}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Castor
   m_TagString: Beaver
   m_Icon: {fileID: 0}

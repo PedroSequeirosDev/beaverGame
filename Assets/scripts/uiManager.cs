@@ -21,6 +21,7 @@ public class uiManager : MonoBehaviour
     public Button increaseLumberjackBtn;
     public Button decreaseBuilderBtn;
     public Button increaseBuilderBtn;
+    public Button placeBuildingBtn;
 
     // Reference to beaverManager and inventory
     public beaverManager manager;
@@ -37,6 +38,9 @@ public class uiManager : MonoBehaviour
         increaseLumberjackBtn.onClick.AddListener(IncreaseLumberjack);
         decreaseBuilderBtn.onClick.AddListener(DecreaseBuilder);
         increaseBuilderBtn.onClick.AddListener(IncreaseBuilder);
+
+        if (placeBuildingBtn != null)
+        placeBuildingBtn.onClick.AddListener(() => FindObjectOfType<BuildingPlacer>().StartPlacing());
     }
 
     void Update()
@@ -58,6 +62,9 @@ public class uiManager : MonoBehaviour
             lumberjackCounter.text = "0";
             builderCounter.text = "0";
         }
+
+        if (placeBuildingBtn != null)
+        placeBuildingBtn.interactable = woodInventory >= 50;
     }
 
     // 6. Decrease dam workers, return excess to idle
