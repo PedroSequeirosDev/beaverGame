@@ -2,13 +2,23 @@ using UnityEngine;
 
 public class beaverAI : MonoBehaviour
 {
-    public BeaverProfession profession = BeaverProfession.Idle;
+    public BeaverProfession _profession = BeaverProfession.Idle;
     public GameObject targetObject;
     public float stopDistance = 0.5f;
     private beaverMovement movement;
     private bool hasArrived = false;
     private float woodTimer = 0f;
     private float damWoodSpent = 0f;
+    private jobManager jobMgr;
+    public BeaverProfession profession
+    {
+        get => _profession;
+        set
+        {
+            _profession = value;
+            UpdateJobSprite();
+        }
+    }
     bool IsTouchingTarget()
     {
         if (targetObject == null) return false;
@@ -22,7 +32,9 @@ public class beaverAI : MonoBehaviour
     void Start()
     {
         movement = GetComponent<beaverMovement>();
+        jobMgr = GetComponentInChildren<jobManager>(); // <-- This finds it on the child!
         AssignTargetForProfession();
+        UpdateJobSprite();
     }
 
     void Update()
@@ -74,7 +86,7 @@ public class beaverAI : MonoBehaviour
                             {
                                 uiManager.Instance.woodInventory -= woodToSpend;
                                 damWoodSpent -= woodToSpend;
-                                dam.Build(0.5f * Time.deltaTime);
+                                dam.Build(200f * Time.deltaTime);
                             }
                             else if (uiManager.Instance.woodInventory < woodToSpend)
                             {
@@ -115,7 +127,7 @@ public class beaverAI : MonoBehaviour
                         foreach (var h in houses)
                         {
                             var houseScript = h.GetComponent<beaverHouse>();
-                            if (houseScript != null && !houseScript.IsBuilt)
+                            if (houseScript != null && houseScript.isPlaced && !houseScript.IsBuilt)
                             {
                                 newTarget = h;
                                 break;
@@ -134,7 +146,7 @@ public class beaverAI : MonoBehaviour
                 foreach (var h in houses)
                 {
                     var houseScript = h.GetComponent<beaverHouse>();
-                    if (houseScript != null && !houseScript.IsBuilt)
+                    if (houseScript != null && houseScript.isPlaced && !houseScript.IsBuilt)
                     {
                         targetObject = h;
                         break;
@@ -142,6 +154,26 @@ public class beaverAI : MonoBehaviour
                 }
                 // If still none, just wait (do nothing)
             }
+        }
+    }
+
+    private void UpdateJobSprite()
+    {
+        if (jobMgr == null) return;
+        switch (profession)
+        {
+            case BeaverProfession.Idle:
+                jobMgr.GetJob("idle");
+                break;
+            case BeaverProfession.Lumberjack:
+                jobMgr.GetJob("lumber");
+                break;
+            case BeaverProfession.DamWorker:
+                jobMgr.GetJob("dam");
+                break;
+            case BeaverProfession.Builder:
+                jobMgr.GetJob("house");
+                break;
         }
     }
 

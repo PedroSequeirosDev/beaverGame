@@ -40,7 +40,7 @@ public class beaverMovement : MonoBehaviour
                 transform.position = targetPosition;
                 // Rotate sprite to face movement direction, correcting for upside-down sprite
                 float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(0, 0, angle + 90); // +90 if your sprite faces down, +270 if it faces up
+                transform.rotation = Quaternion.Euler(10, 10, angle + 90); // +90 if your sprite faces down, +270 if it faces up
             }
         }
 
