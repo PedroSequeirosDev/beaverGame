@@ -15,6 +15,9 @@ public class BuildingPlacer : MonoBehaviour
     {
         if (previewInstance != null) Destroy(previewInstance);
         previewInstance = Instantiate(buildingPrefab);
+        var houseScript = previewInstance.GetComponent<beaverHouse>();
+        if (houseScript != null)
+            houseScript.isPlaced = false;
         previewRenderer = previewInstance.GetComponent<SpriteRenderer>();
         SetPreviewColor(Color.red);
         isPlacing = true;
@@ -64,7 +67,10 @@ void Update()
     // Left click to place
     if (Input.GetMouseButtonDown(0) && canPlace && !EventSystem.current.IsPointerOverGameObject())
     {
-        Instantiate(buildingPrefab, previewInstance.transform.position, Quaternion.identity);
+        GameObject placed = Instantiate(buildingPrefab, previewInstance.transform.position, Quaternion.identity);
+        var houseScript = placed.GetComponent<beaverHouse>();
+        if (houseScript != null)
+            houseScript.isPlaced = true; // Mark as placed
         uiManager.Instance.woodInventory -= 50;
         Destroy(previewInstance);
         isPlacing = false;

@@ -256,6 +256,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 100
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 495
 --- !u!114 &-4992241766720245286
 MonoBehaviour:
   m_ObjectHideFlags: 0

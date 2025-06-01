@@ -15,7 +15,12 @@ public class beaverManager : MonoBehaviour
     void Update()
     {
         int houseCount = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None)
-            .Count(obj => obj.CompareTag("House"));
+            .Count(obj =>
+            {
+                if (!obj.CompareTag("House")) return false;
+                var houseComp = obj.GetComponent<beaverHouse>();
+                return houseComp != null && houseComp.IsBuilt;
+            });
 
         maxPopulation = houseCount * beaversPerHouse;
 

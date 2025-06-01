@@ -5,6 +5,7 @@ public class beaverMovement : MonoBehaviour
     public float moveSpeed = 5f;
     private Vector2 moveDirection = Vector2.zero;
     private Camera mainCamera;
+    public LayerMask obstacleMask = ~0;
 
     void Start()
     {
@@ -18,7 +19,12 @@ public class beaverMovement : MonoBehaviour
             Vector2 targetPosition = (Vector2)transform.position + moveDirection.normalized * moveSpeed * Time.deltaTime;
 
             // Raycast to check for obstacles, ignoring self
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, moveDirection.normalized, moveSpeed * Time.deltaTime);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(
+                transform.position,
+                moveDirection.normalized,
+                moveSpeed * Time.deltaTime,
+                obstacleMask
+            );
             bool blocked = false;
             foreach (var hit in hits)
             {

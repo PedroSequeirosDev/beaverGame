@@ -4,6 +4,7 @@ public class beaverHouse : MonoBehaviour
 {
     public float buildPoints = 30; // Set initial build points in Inspector
     public float maxBuildPoints = 30; // Set max build points in Inspector
+    public bool isPlaced = true; // Default to true for already-placed houses
 
     private SpriteRenderer spriteRenderer;
     public bool IsBuilt => buildPoints <= 0;

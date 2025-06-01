@@ -103,7 +103,7 @@ public class beaverAI : MonoBehaviour
                 if (IsTouchingTarget())
                 {
                     var house = targetObject.GetComponent<beaverHouse>();
-                    if (house != null && !house.IsBuilt)
+                    if (house != null && house.isPlaced && !house.IsBuilt)
                     {
                         house.Build(0.5f * Time.deltaTime);
                     }
@@ -171,13 +171,13 @@ public class beaverAI : MonoBehaviour
         else if (profession == BeaverProfession.Idle)
         {
             var houses = GameObject.FindGameObjectsWithTag("House");
-            if (houses.Length > 0)
+            GameObject closest = null;
+            float closestDist = float.MaxValue;
+            Vector3 myPos = transform.position;
+            foreach (var house in houses)
             {
-                // Pick the closest house
-                GameObject closest = null;
-                float closestDist = float.MaxValue;
-                Vector3 myPos = transform.position;
-                foreach (var house in houses)
+                var houseScript = house.GetComponent<beaverHouse>();
+                if (houseScript != null && houseScript.IsBuilt)
                 {
                     float dist = (house.transform.position - myPos).sqrMagnitude;
                     if (dist < closestDist)
@@ -186,28 +186,57 @@ public class beaverAI : MonoBehaviour
                         closest = house;
                     }
                 }
-                targetObject = closest;
             }
-            else
-            {
-                targetObject = null;
-            }
+            targetObject = closest;
         }
         else if (profession == BeaverProfession.Builder)
         {
-            var houses = GameObject.FindGameObjectsWithTag("House");
-            foreach (var house in houses)
+            if (targetObject != null)
             {
-                var houseScript = house.GetComponent<beaverHouse>();
-                if (houseScript != null && !houseScript.IsBuilt)
+                MoveToTarget(targetObject.transform.position);
+                if (IsTouchingTarget())
                 {
-                    targetObject = house;
-                    return;
+                    var house = targetObject.GetComponent<beaverHouse>();
+                    if (house != null && house.isPlaced && !house.IsBuilt)
+                    {
+                        house.Build(0.5f * Time.deltaTime);
+                    }
+                    else
+                    {
+                        // Only try to find a new unbuilt house if the current one is built or missing
+                        var houses = GameObject.FindGameObjectsWithTag("House");
+                        GameObject newTarget = null;
+                        foreach (var h in houses)
+                        {
+                            var houseScript = h.GetComponent<beaverHouse>();
+                            if (houseScript != null && houseScript.isPlaced && !houseScript.IsBuilt)
+                            {
+                                newTarget = h;
+                                break;
+                            }
+                        }
+                        if (newTarget != null)
+                            targetObject = newTarget;
+                        // If no new unbuilt house, stay at the last target (do nothing)
+                    }
                 }
             }
-            targetObject = null;
+            else
+            {
+                // If we have no target, try to find an unbuilt house
+                var houses = GameObject.FindGameObjectsWithTag("House");
+                foreach (var h in houses)
+                {
+                    var houseScript = h.GetComponent<beaverHouse>();
+                    if (houseScript != null && houseScript.isPlaced && !houseScript.IsBuilt)
+                    {
+                        targetObject = h;
+                        break;
+                    }
+                }
+                // If still none, just wait (do nothing)
+            }
         }
-    }
 
     float GetEdgeToEdgeDistance(GameObject target, float extraGap = 0f)
     {
