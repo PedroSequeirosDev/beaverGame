@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class damManager : MonoBehaviour
 {
-    public float buildPoints = 30; // Set initial build points in Inspector
-    public float maxBuildPoints = 30; // Set max build points in Inspector
+    public float buildPoints = 1000; // Set initial build points in Inspector
+    public float maxBuildPoints = 1000; // Set max build points in Inspector
 
     public bool IsBuilt => buildPoints <= 0;
 

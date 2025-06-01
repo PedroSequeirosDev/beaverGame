@@ -137,22 +137,11 @@ public class beaverAI : MonoBehaviour
     {
         if (profession == BeaverProfession.Lumberjack)
         {
-            var trees = GameObject.FindGameObjectsWithTag("Tree");
+            string treeTag = transform.position.x < 0 ? "TreesLeft" : "TreesRight";
+            var trees = GameObject.FindGameObjectsWithTag(treeTag);
             if (trees.Length > 0)
             {
-                GameObject closest = null;
-                float closestDist = float.MaxValue;
-                Vector3 myPos = transform.position;
-                foreach (var tree in trees)
-                {
-                    float dist = (tree.transform.position - myPos).sqrMagnitude;
-                    if (dist < closestDist)
-                    {
-                        closestDist = dist;
-                        closest = tree;
-                    }
-                }
-                targetObject = closest;
+                targetObject = trees[0]; // Only one per side
             }
             else
             {

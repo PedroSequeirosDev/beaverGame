@@ -5,9 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Beaver
-  - Tree
   - House
   - Dam
+  - TreesRight
+  - TreesLeft
   layers:
   - Default
   - TransparentFX
