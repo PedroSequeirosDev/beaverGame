@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7890904286957654060}
   - component: {fileID: 1639377245130033650}
+  - component: {fileID: 2893287902704559894}
   m_Layer: 6
   m_Name: jobIndicator
   m_TagString: Untagged
@@ -87,6 +88,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2893287902704559894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5152952692067938160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae00aa981cd682b4a97031732b75517d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  houseSprite: {fileID: 4301844918096825189, guid: 3422e4203bb5c9846a03ce032da2359e, type: 3}
+  damSprite: {fileID: -6265054668056534801, guid: 2940de9d1285bf141ac2640a4c1597ee, type: 3}
+  idleSprite: {fileID: -525506827387362294, guid: 136de0b03f7f16b4393e37d0c509fb28, type: 3}
+  lumberSprite: {fileID: -5825250732961213246, guid: f98a13fa75fe23f46bcff71e35fdb280, type: 3}
 --- !u!1 &5739072683652287266
 GameObject:
   m_ObjectHideFlags: 0
