@@ -7,6 +7,7 @@ public class beaverAI : MonoBehaviour
     public float stopDistance = 0.5f;
     private beaverMovement movement;
     private bool hasArrived = false;
+    private float woodTimer = 0f;
     bool IsTouchingTarget()
     {
         if (targetObject == null) return false;
@@ -17,24 +18,8 @@ public class beaverAI : MonoBehaviour
 
         return myCollider.IsTouching(targetCollider);
     }
-
     void Start()
     {
-        movement = GetComponent<beaverMovement>();
-        // Auto-assign targets if not set
-        if (profession == BeaverProfession.Lumberjack && targetObject == null)
-        {
-            var trees = GameObject.FindGameObjectsWithTag("Tree");
-            if (trees.Length > 0)
-                targetObject = trees[Random.Range(0, trees.Length)];
-        }
-        else if (profession == BeaverProfession.DamWorker && targetObject == null)
-        {
-            var dams = GameObject.FindGameObjectsWithTag("Dam");
-            if (dams.Length > 0)
-                targetObject = dams[Random.Range(0, dams.Length)];
-        }
-
         movement = GetComponent<beaverMovement>();
         AssignTargetForProfession();
     }
@@ -47,23 +32,103 @@ public class beaverAI : MonoBehaviour
             if (targetObject != null)
                 MoveToTarget(targetObject.transform.position);
         }
-        else if (profession == BeaverProfession.Lumberjack || profession == BeaverProfession.DamWorker)
+        else if (profession == BeaverProfession.Lumberjack)
         {
             if (targetObject != null)
+            {
                 MoveToTarget(targetObject.transform.position);
+                if (IsTouchingTarget())
+                {
+                    woodTimer += Time.deltaTime;
+                    if (woodTimer >= 2f)
+                    {
+                        woodTimer = 0f;
+                        // Add wood to inventory
+                        if (uiManager.Instance != null)
+                            uiManager.Instance.woodInventory += 1;
+                    }
+                }
+                else
+                {
+                    woodTimer = 0f; // Reset timer if not at target
+                }
+            }
+        }
+        else if (profession == BeaverProfession.DamWorker)
+        {
+            if (targetObject != null)
+            {
+                MoveToTarget(targetObject.transform.position);
+                if (IsTouchingTarget())
+                {
+                    var dam = targetObject.GetComponent<beaverHouse>(); // Or beaverDam if you have a separate script
+                    if (dam != null && !dam.IsBuilt)
+                    {
+                        if (uiManager.Instance != null && uiManager.Instance.woodInventory >= 5 * Time.deltaTime)
+                        {
+                            dam.Build(0.5f * Time.deltaTime);
+                            uiManager.Instance.woodInventory -= (int)(5 * Time.deltaTime);
+                        }
+                    }
+                    else
+                    {
+                        // Try to find a new unbuilt dam
+                        AssignTargetForProfession();
+                    }
+                }
+            }
+            else
+            {
+                // Try to find a new unbuilt dam if none assigned
+                AssignTargetForProfession();
+            }
         }
         else if (profession == BeaverProfession.Builder)
         {
             if (targetObject != null)
             {
                 MoveToTarget(targetObject.transform.position);
-                // Try to build if close enough
-                if (Vector2.Distance(transform.position, targetObject.transform.position) <= stopDistance)
+                if (IsTouchingTarget())
                 {
                     var house = targetObject.GetComponent<beaverHouse>();
                     if (house != null && !house.IsBuilt)
-                        house.Build(0.5f * Time.deltaTime); // 0.5 per second per beaver
+                    {
+                        house.Build(0.5f * Time.deltaTime);
+                    }
+                    else
+                    {
+                        // Only try to find a new unbuilt house if the current one is built or missing
+                        var houses = GameObject.FindGameObjectsWithTag("House");
+                        GameObject newTarget = null;
+                        foreach (var h in houses)
+                        {
+                            var houseScript = h.GetComponent<beaverHouse>();
+                            if (houseScript != null && !houseScript.IsBuilt)
+                            {
+                                newTarget = h;
+                                break;
+                            }
+                        }
+                        if (newTarget != null)
+                            targetObject = newTarget;
+                        // If no new unbuilt house, stay at the last target (do nothing)
+                    }
                 }
+            }
+            else
+            {
+                // If we have no target, try to find an unbuilt house
+                var houses = GameObject.FindGameObjectsWithTag("House");
+                foreach (var h in houses)
+                {
+                    var houseScript = h.GetComponent<beaverHouse>();
+                    if (houseScript != null && !houseScript.IsBuilt)
+                    {
+                        targetObject = h;
+                        break;
+                    }
+                }
+                // If still none, just wait (do nothing)
             }
         }
     }
@@ -74,9 +139,25 @@ public class beaverAI : MonoBehaviour
         {
             var trees = GameObject.FindGameObjectsWithTag("Tree");
             if (trees.Length > 0)
-                targetObject = trees[Random.Range(0, trees.Length)];
+            {
+                GameObject closest = null;
+                float closestDist = float.MaxValue;
+                Vector3 myPos = transform.position;
+                foreach (var tree in trees)
+                {
+                    float dist = (tree.transform.position - myPos).sqrMagnitude;
+                    if (dist < closestDist)
+                    {
+                        closestDist = dist;
+                        closest = tree;
+                    }
+                }
+                targetObject = closest;
+            }
             else
+            {
                 targetObject = null;
+            }
         }
         else if (profession == BeaverProfession.DamWorker)
         {
@@ -88,13 +169,32 @@ public class beaverAI : MonoBehaviour
         }
         else if (profession == BeaverProfession.Idle)
         {
-            // Optionally, assign a house here if you want
-            // Otherwise, beaverManager already assigns a house on spawn
+            var houses = GameObject.FindGameObjectsWithTag("House");
+            if (houses.Length > 0)
+            {
+                // Pick the closest house
+                GameObject closest = null;
+                float closestDist = float.MaxValue;
+                Vector3 myPos = transform.position;
+                foreach (var house in houses)
+                {
+                    float dist = (house.transform.position - myPos).sqrMagnitude;
+                    if (dist < closestDist)
+                    {
+                        closestDist = dist;
+                        closest = house;
+                    }
+                }
+                targetObject = closest;
+            }
+            else
+            {
+                targetObject = null;
+            }
         }
         else if (profession == BeaverProfession.Builder)
         {
             var houses = GameObject.FindGameObjectsWithTag("House");
-            // Find an unbuilt house
             foreach (var house in houses)
             {
                 var houseScript = house.GetComponent<beaverHouse>();
