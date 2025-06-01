@@ -8,6 +8,7 @@ public class beaverAI : MonoBehaviour
     private beaverMovement movement;
     private bool hasArrived = false;
     private float woodTimer = 0f;
+    private float damWoodSpent = 0f;
     bool IsTouchingTarget()
     {
         if (targetObject == null) return false;
@@ -61,13 +62,24 @@ public class beaverAI : MonoBehaviour
                 MoveToTarget(targetObject.transform.position);
                 if (IsTouchingTarget())
                 {
-                    var dam = targetObject.GetComponent<beaverHouse>(); // Or beaverDam if you have a separate script
+                    var dam = targetObject.GetComponent<damManager>();
                     if (dam != null && !dam.IsBuilt)
                     {
-                        if (uiManager.Instance != null && uiManager.Instance.woodInventory >= 5 * Time.deltaTime)
+                        if (uiManager.Instance != null && uiManager.Instance.woodInventory > 0)
                         {
-                            dam.Build(0.5f * Time.deltaTime);
-                            uiManager.Instance.woodInventory -= (int)(5 * Time.deltaTime);
+                            float woodNeeded = 1f * Time.deltaTime;
+                            damWoodSpent += woodNeeded;
+                            int woodToSpend = Mathf.FloorToInt(damWoodSpent);
+                            if (woodToSpend > 0 && uiManager.Instance.woodInventory >= woodToSpend)
+                            {
+                                uiManager.Instance.woodInventory -= woodToSpend;
+                                damWoodSpent -= woodToSpend;
+                                dam.Build(0.5f * Time.deltaTime);
+                            }
+                            else if (uiManager.Instance.woodInventory < woodToSpend)
+                            {
+                                // Not enough wood, don't build this frame
+                            }
                         }
                     }
                     else
