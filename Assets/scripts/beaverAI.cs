@@ -145,6 +145,43 @@ public class beaverAI : MonoBehaviour
         }
     }
 
+    float GetEdgeToEdgeDistance(GameObject target, float extraGap = 0f)
+        {
+            float myRadius = 0f;
+            var myCircle = GetComponent<CircleCollider2D>();
+            if (myCircle != null)
+                myRadius = myCircle.radius * Mathf.Abs(transform.localScale.x);
+
+            float targetRadius = 0f;
+            if (target != null)
+            {
+                var targetCircle = target.GetComponent<CircleCollider2D>();
+                if (targetCircle != null)
+                    targetRadius = targetCircle.radius * Mathf.Abs(target.transform.localScale.x);
+            }
+            return myRadius + targetRadius + extraGap;
+        }
+
+        void MoveToTarget(Vector2 targetPos)
+        {
+            if (targetObject == null) return;
+
+            if (!IsTouchingTarget())
+            {
+                Vector2 dir = (targetPos - (Vector2)transform.position);
+                movement.SetMoveDirection(dir.normalized);
+                hasArrived = false;
+            }
+            else
+            {
+                if (!hasArrived)
+                {
+                    movement.SetMoveDirection(Vector2.zero);
+                    hasArrived = true;
+                }
+            }
+        }
+
     public void AssignTargetForProfession()
     {
         if (profession == BeaverProfession.Lumberjack)
@@ -235,42 +272,6 @@ public class beaverAI : MonoBehaviour
                     }
                 }
                 // If still none, just wait (do nothing)
-            }
-        }
-
-    float GetEdgeToEdgeDistance(GameObject target, float extraGap = 0f)
-    {
-        float myRadius = 0f;
-        var myCircle = GetComponent<CircleCollider2D>();
-        if (myCircle != null)
-            myRadius = myCircle.radius * Mathf.Abs(transform.localScale.x);
-
-        float targetRadius = 0f;
-        if (target != null)
-        {
-            var targetCircle = target.GetComponent<CircleCollider2D>();
-            if (targetCircle != null)
-                targetRadius = targetCircle.radius * Mathf.Abs(target.transform.localScale.x);
-        }
-        return myRadius + targetRadius + extraGap;
-    }
-
-    void MoveToTarget(Vector2 targetPos)
-    {
-        if (targetObject == null) return;
-
-        if (!IsTouchingTarget())
-        {
-            Vector2 dir = (targetPos - (Vector2)transform.position);
-            movement.SetMoveDirection(dir.normalized);
-            hasArrived = false;
-        }
-        else
-        {
-            if (!hasArrived)
-            {
-                movement.SetMoveDirection(Vector2.zero);
-                hasArrived = true;
             }
         }
     }
