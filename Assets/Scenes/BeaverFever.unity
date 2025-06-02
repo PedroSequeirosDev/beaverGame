@@ -3215,7 +3215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98fea7872a9da0f4caadee5f7981364c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floodTimer: 5
+  floodTimer: 120
   floodInterval: 120
   floodDamage: 250
   floodWarningTime: 30
