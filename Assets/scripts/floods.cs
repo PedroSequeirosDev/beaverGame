@@ -42,14 +42,7 @@ public class floods : MonoBehaviour
             return;
         }
         
-        dam.buildPoints += floodDamage;
-
-        if (dam.buildPoints >= dam.maxBuildPoints)
-        {
-            Debug.Log("Dam has been destroyed!");
-            SceneManager.LoadScene("mainMenu");
-        }
-        
+        dam.buildPoints += floodDamage;       
 
         Debug.Log("Flooding! Dam build points reduced by " + floodDamage);
     }

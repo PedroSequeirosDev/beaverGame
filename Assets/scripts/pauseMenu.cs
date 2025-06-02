@@ -6,7 +6,7 @@ public class pauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseManager;
     bool isPaused = false;
-    public fade screenfade;
+    
 
     private void Update()
     {
@@ -16,12 +16,7 @@ public class pauseMenu : MonoBehaviour
             isPaused = true;
             pauseManager.SetActive(true);
             Time.timeScale = 0;
-
-
         }
-
-
-
     }
 
     public void ResumeGame()
@@ -29,15 +24,6 @@ public class pauseMenu : MonoBehaviour
         pauseManager.SetActive(false);
         isPaused = false;
         Time.timeScale = 1;
-
-    }
-
-    public void ResumeWithKey()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) && pauseManager.activeSelf)
-        {
-            pauseManager.SetActive(false);
-        }
 
     }
 
