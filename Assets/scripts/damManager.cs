@@ -9,7 +9,11 @@ public class damManager : MonoBehaviour
     public bool IsBuilt => buildPoints <= 0;
     public bool panelactive = false;
 
+    public bool youWin = false;
+
     [SerializeField] private GameObject damGameOver;
+
+    [SerializeField] private GameObject damYouWin;
 
 
     void Update()
@@ -33,6 +37,14 @@ public class damManager : MonoBehaviour
                 Time.timeScale = 0;
 
             }
+        }
+
+        if (buildPoints <= 0)
+
+        {
+            youWin = true;
+            damYouWin.SetActive(true);
+            Time.timeScale = 0;
         }
     }
 

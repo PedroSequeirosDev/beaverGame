@@ -138,8 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36331c943f84a244c86d6d986bb16065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildPoints: 30
-  maxBuildPoints: 30
+  buildPoints: 0
+  maxBuildPoints: 20
   isPlaced: 1
   buildFinishEffect: {fileID: 1352100613571869391}
 --- !u!1 &1915758484056145131

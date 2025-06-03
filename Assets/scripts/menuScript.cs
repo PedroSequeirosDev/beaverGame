@@ -13,6 +13,7 @@ public class menuScript : MonoBehaviour
     private IEnumerator FadeNextScene()
     {
         yield return screenfade.FadeIn();
+        Time.timeScale = 1; 
         SceneManager.LoadScene("BeaverFever");
     }
 
